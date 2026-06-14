@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
         img.onload = () => {
             canvas.width = svgElement.clientWidth || 600;
             canvas.height = svgElement.clientHeight || 400;
-            ctx.fillStyle = '#0f172a'; // match background
+            ctx.fillStyle = '#2e1065'; // match new purple background
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
             const pngData = canvas.toDataURL('image/png');
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
         img.onload = () => {
             canvas.width = svgElement.clientWidth || 600;
             canvas.height = svgElement.clientHeight || 400;
-            ctx.fillStyle = '#0f172a';
+            ctx.fillStyle = '#2e1065'; // match new purple background
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
             const pngData = canvas.toDataURL('image/png');

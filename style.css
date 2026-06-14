@@ -1,13 +1,13 @@
 :root {
-    --primary-color: #818cf8;
-    --primary-hover: #6366f1;
-    --bg-gradient-start: #0f172a;
-    --bg-gradient-end: #1e1b4b;
+    --primary-color: #c084fc;
+    --primary-hover: #a855f7;
+    --bg-gradient-start: #3b0764;
+    --bg-gradient-end: #17072b;
     --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    --white: #1e293b; /* used for card/input bg */
-    --border: #334155;
-    --disabled: #0f172a;
+    --text-muted: #d8b4fe;
+    --white: #2e1065;
+    --border: #581c87;
+    --disabled: #1e1b4b;
     --text-white: #ffffff;
 }
 
