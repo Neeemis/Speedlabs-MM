@@ -6,6 +6,8 @@
     <title>Speed Labs</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <div id="app">
@@ -71,6 +73,61 @@
                 
                 <div class="action-container">
                     <button id="go-btn" class="primary-btn" disabled>Go to Mind Map</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mind Map View -->
+        <div id="mindmap-view" class="view">
+            <div class="header">
+                <div class="logo-container-small">
+                    <svg class="logo-icon-small" viewBox="0 0 100 100" width="40" height="40">
+                        <path d="M10,40 Q25,25 50,40 Q75,25 90,40 L90,55 Q75,40 50,55 Q25,40 10,55 Z" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M50,40 L50,55" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="50" cy="80" r="8" fill="#ffffff" />
+                    </svg>
+                    <h2 class="logo-text-small">SpeEdLabs</h2>
+                </div>
+                <button id="back-to-select-btn" class="secondary-btn">Back</button>
+            </div>
+            
+            <div class="mindmap-container">
+                <h2 class="title" id="mindmap-title">Your Mind Map</h2>
+                <div class="breadcrumb" id="mindmap-path"></div>
+                
+                <div id="mindmap-content" class="mindmap-box">
+                    <svg id="mindmap-svg" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="100%" height="100%" fill="#1e293b" rx="15" />
+                        
+                        <!-- Connecting Lines -->
+                        <path d="M 300 200 L 150 120" fill="none" stroke="#6366f1" stroke-width="3" />
+                        <path d="M 300 200 L 450 120" fill="none" stroke="#6366f1" stroke-width="3" />
+                        <path d="M 300 200 L 150 280" fill="none" stroke="#6366f1" stroke-width="3" />
+                        <path d="M 300 200 L 450 280" fill="none" stroke="#6366f1" stroke-width="3" />
+                        
+                        <!-- Sub Nodes -->
+                        <rect x="70" y="100" width="160" height="40" rx="20" fill="#334155" stroke="#6366f1" stroke-width="2" />
+                        <text x="150" y="125" font-family="Poppins" font-size="14" fill="#f8fafc" text-anchor="middle">Overview</text>
+                        
+                        <rect x="370" y="100" width="160" height="40" rx="20" fill="#334155" stroke="#6366f1" stroke-width="2" />
+                        <text x="450" y="125" font-family="Poppins" font-size="14" fill="#f8fafc" text-anchor="middle">Formulas</text>
+                        
+                        <rect x="70" y="260" width="160" height="40" rx="20" fill="#334155" stroke="#6366f1" stroke-width="2" />
+                        <text x="150" y="285" font-family="Poppins" font-size="14" fill="#f8fafc" text-anchor="middle">Key Concepts</text>
+                        
+                        <rect x="370" y="260" width="160" height="40" rx="20" fill="#334155" stroke="#6366f1" stroke-width="2" />
+                        <text x="450" y="285" font-family="Poppins" font-size="14" fill="#f8fafc" text-anchor="middle">Practice Questions</text>
+
+                        <!-- Central Node -->
+                        <rect x="200" y="165" width="200" height="70" rx="35" fill="#818cf8" />
+                        <text id="mm-center" x="300" y="206" font-family="Poppins" font-size="18" fill="white" font-weight="bold" text-anchor="middle">Central Topic</text>
+                    </svg>
+                </div>
+
+                <div class="download-actions">
+                    <button id="download-png" class="secondary-btn">Download PNG</button>
+                    <button id="download-pdf" class="secondary-btn">Download PDF</button>
+                    <button id="download-svg" class="secondary-btn">Download Vector (SVG)</button>
                 </div>
             </div>
         </div>

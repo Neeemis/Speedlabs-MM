@@ -42,10 +42,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Views
     const landingView = document.getElementById('landing-view');
     const selectionView = document.getElementById('selection-view');
+    const mindmapView = document.getElementById('mindmap-view');
     
     // Buttons
     const startBtn = document.getElementById('start-btn');
     const backBtn = document.getElementById('back-btn');
+    const backToSelectBtn = document.getElementById('back-to-select-btn');
     const goBtn = document.getElementById('go-btn');
     
     // Selects
@@ -64,6 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
         selectionView.classList.remove('active');
         landingView.classList.add('active');
         resetSelections();
+    });
+
+    backToSelectBtn.addEventListener('click', () => {
+        mindmapView.classList.remove('active');
+        selectionView.classList.add('active');
     });
 
     // Populate Initial Classes
@@ -160,7 +167,73 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     goBtn.addEventListener('click', () => {
-        alert(`Mind Map Ready!\n\nClass: ${classSelect.value}\nSubject: ${subjectSelect.value}\nTopic: ${topicSelect.value}\nSubtopic: ${subtopicSelect.value}`);
+        selectionView.classList.remove('active');
+        mindmapView.classList.add('active');
+        
+        const pathText = `${classSelect.value} > ${subjectSelect.value} > ${topicSelect.value} > ${subtopicSelect.value}`;
+        document.getElementById('mindmap-path').textContent = pathText;
+        document.getElementById('mm-center').textContent = subtopicSelect.value;
+    });
+
+    // Download Logic
+    const svgElement = document.getElementById('mindmap-svg');
+
+    function downloadFile(content, fileName, type) {
+        const a = document.createElement('a');
+        const file = new Blob([content], { type: type });
+        a.href = URL.createObjectURL(file);
+        a.download = fileName;
+        a.click();
+    }
+
+    document.getElementById('download-svg').addEventListener('click', () => {
+        const svgData = new XMLSerializer().serializeToString(svgElement);
+        downloadFile(svgData, 'mindmap.svg', 'image/svg+xml');
+    });
+
+    document.getElementById('download-png').addEventListener('click', () => {
+        const svgData = new XMLSerializer().serializeToString(svgElement);
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        img.onload = () => {
+            canvas.width = svgElement.clientWidth || 600;
+            canvas.height = svgElement.clientHeight || 400;
+            ctx.fillStyle = '#0f172a'; // match background
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            const pngData = canvas.toDataURL('image/png');
+            const a = document.createElement('a');
+            a.href = pngData;
+            a.download = 'mindmap.png';
+            a.click();
+        };
+        img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+    });
+
+    document.getElementById('download-pdf').addEventListener('click', () => {
+        const { jsPDF } = window.jspdf;
+        const svgData = new XMLSerializer().serializeToString(svgElement);
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        img.onload = () => {
+            canvas.width = svgElement.clientWidth || 600;
+            canvas.height = svgElement.clientHeight || 400;
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            const pngData = canvas.toDataURL('image/png');
+            
+            const pdf = new jsPDF({
+                orientation: canvas.width > canvas.height ? 'landscape' : 'portrait',
+                unit: 'px',
+                format: [canvas.width, canvas.height]
+            });
+            pdf.addImage(pngData, 'PNG', 0, 0, canvas.width, canvas.height);
+            pdf.save('mindmap.pdf');
+        };
+        img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
     });
 
     // Initialize
